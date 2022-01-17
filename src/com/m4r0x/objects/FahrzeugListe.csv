@@ -1,0 +1,4 @@
+Herstellername,Kilometerstand,VerbrauchtPro100km,MaximalerTankinhalt,BasisMietpreis,MietpreisProTag,Leihstatus,LeihdauerInTagen,FahrzeugTyp,Tankinhalt
+Volkswagen,20000,6.5,60.0,200.0,30.64,false,30,MITTELKLASSE,0.0
+Volvo,35000,5.7,50.0,180.0,25.2,false,30,KLEINWAGEN,0.0
+Mercedes_Benz,25000,10.5,70.0,70.0,70.65,false,30,LUXUS,0.0
