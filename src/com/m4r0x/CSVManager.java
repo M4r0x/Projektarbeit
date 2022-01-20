@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class CSVManager {
 String filePath = ".\\src\\com\\m4r0x\\objectsStorage\\FahrzeugListe.csv";
-
+String temp;
 
     public void createCSVFile(Fahrzeug fahrzeug) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath, true);
@@ -74,16 +74,20 @@ String filePath = ".\\src\\com\\m4r0x\\objectsStorage\\FahrzeugListe.csv";
     //creates an identical version of the current csv without the line of the specified car object's contents
     public void deleteCar(Fahrzeug fahrzeug) throws IOException {
         FileWriter fileWriter = new FileWriter(filePath,false);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
         File file = new File(filePath);
-        Scanner scanner = new Scanner(file);
+        Scanner scanner = new Scanner(file).useDelimiter(",");
         StringBuilder newFileContent = new StringBuilder();
+        scanner.nextLine();
         while(scanner.hasNextLine()) {
-            String temp = scanner.nextLine();
+            System.out.println("Test");
+            temp = scanner.nextLine();
             if (!temp.contains(fahrzeug.getHerstellername())) {
                 newFileContent.append(temp);
             }
         }
-        fileWriter.write(newFileContent.toString());
+        printWriter.print(newFileContent.toString());
+        printWriter.close();
         fileWriter.close();
         scanner.close();
         System.out.println(fahrzeug.getHerstellername()+" wurde erfolgreich gelöscht!");
