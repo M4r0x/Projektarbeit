@@ -5,13 +5,14 @@ import com.m4r0x.exceptions.InvalidInputException;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class CSVManager {
+String filePath = ".\\src\\com\\m4r0x\\objectsStorage\\FahrzeugListe.csv";
+
 
     public void createCSVFile(Fahrzeug fahrzeug) throws IOException {
-        FileWriter fileWriter = new FileWriter(".\\src\\com\\m4r0x\\objects\\FahrzeugListe.csv", true);
+        FileWriter fileWriter = new FileWriter(filePath, true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         StringBuilder result = new StringBuilder();
         String newLine = System.getProperty("line.separator");
@@ -35,12 +36,11 @@ public class CSVManager {
                 result.append(",");
                 result.append(fahrzeug.getTankinhalt());
                 result.append(newLine);
-            printWriter.print(result);
-        printWriter.close();
+                printWriter.print(result);
+                printWriter.close();
     }
     public ArrayList<Fahrzeug> createArrayListFromCSV() throws FileNotFoundException, InvalidInputException {
-        File file = new File(".\\src\\com\\m4r0x\\objects\\FahrzeugListe.csv");
-        Scanner tokenCounter = new Scanner(file);
+        File file = new File(filePath);
         ArrayList<Fahrzeug> fahrzeugArrayList = new ArrayList<>();
         Scanner scanner = new Scanner(file).useDelimiter(",");
         String herstellername;
@@ -68,6 +68,24 @@ public class CSVManager {
             tankinhalt = Float.parseFloat(currentLineAsTokenArray[9]);
             fahrzeugArrayList.add(new Fahrzeug(herstellername,kilometerstand,verbrauchtPro100km,maximalerTankinhalt,basisMietpreis,mietpreisProTag,leihstatus,leihdauerInTagen, fahrzeugTyp,tankinhalt));
         }
+        scanner.close();
         return fahrzeugArrayList;
+    }
+    //creates an identical version of the current csv without the line of the specified car object's contents
+    public void deleteCar(Fahrzeug fahrzeug) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath,false);
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        StringBuilder newFileContent = new StringBuilder();
+        while(scanner.hasNextLine()) {
+            String temp = scanner.nextLine();
+            if (!temp.contains(fahrzeug.getHerstellername())) {
+                newFileContent.append(temp);
+            }
+        }
+        fileWriter.write(newFileContent.toString());
+        fileWriter.close();
+        scanner.close();
+        System.out.println(fahrzeug.getHerstellername()+" wurde erfolgreich gelöscht!");
     }
 }

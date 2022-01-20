@@ -58,11 +58,37 @@ public class TerminalInteraction {
                 userInput.nextLine();
             }
         }
-//        System.out.println("_________________________________________________________________________________________________________");
-//        System.out.println("| [1]Auto löschen [2]Auto Attribute auflisten [3]reguläre Methoden auswählen [4] |");
-//        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
-//
-//        System.out.println("________________________________________________________________________________________");
+        Dialog dialog2 = new Dialog(new String[]{"Auto löschen", "Auto Attribute auflisten", "Methoden auswählen"});
+        check = 0;
+        while (true) {
+            try {
+                dialog2.display();
+                switch (userInput.nextInt()) {
+                    case 0:
+                        csvManager.deleteCar(ausgewähltesFahrzeug);
+                        check=0;
+                        break;
+                    case 1:
+                        System.out.println(ausgewähltesFahrzeug);
+                        check=1;
+                        break;
+                    case 2:
+                        ausgewähltesFahrzeug = selectCar(csvManager.createArrayListFromCSV());
+                        check=0;
+                        break;
+                    default:
+                        check=0;
+                        throw new InputMismatchException();
+                }
+                if (check == 0) {
+                    break;
+                }
+            } catch(InputMismatchException | IOException e) {
+                System.out.println("Die Eingabe ist nicht valide.");
+                userInput.nextLine();
+            }
+        }
+
 //        System.out.println("| [1]datenAusgeben [2]tankstatus [3]berechneMietpreis [4]autoBuchen [5]fahren [6]tanken |");
 //        System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
 //
